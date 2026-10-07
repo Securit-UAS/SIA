@@ -19,3 +19,4 @@ Revision notes:
 - Main register now shows separate SIA Status and Training Status columns with RAG dots.
 - Role column removed from the headline table (role remains available in record details/filtering).
 - Fully compliant SIA rows use normal white styling; colour wash is reserved for red/amber/blue exceptions.
+.
