@@ -1,102 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>SIA Compliance | TALOS</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #0f172a;
-            color: #e5e7eb;
-        }
-
-        .page {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-        }
-
-        .card {
-            width: 100%;
-            max-width: 700px;
-            background: #111827;
-            border: 1px solid #263244;
-            border-radius: 14px;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-        }
-
-        h1 {
-            margin: 0 0 8px;
-            font-size: 32px;
-        }
-
-        .subtitle {
-            color: #94a3b8;
-            margin-bottom: 32px;
-        }
-
-        .status {
-            display: inline-block;
-            padding: 8px 14px;
-            border-radius: 999px;
-            background: #1e293b;
-            border: 1px solid #334155;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .message {
-            margin-top: 24px;
-            color: #cbd5e1;
-            line-height: 1.6;
-        }
-
-        .footer {
-            margin-top: 32px;
-            font-size: 12px;
-            color: #64748b;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>Securit SIA Compliance</title>
+  <style>
+    :root{--bg:#f4f6f8;--panel:#fff;--panel2:#f8fafc;--line:#d9e0e7;--text:#1d2733;--muted:#687687;--navy:#24377a;--red:#e53234;--green:#18875a;--amber:#b87900;--danger:#c44343;--blue:#2f6fab;--shadow:0 8px 24px rgba(31,45,61,.08);--radius:16px}
+    *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{min-height:100vh}button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+    .shell{max-width:1550px;margin:0 auto;padding:22px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px}.brand{display:flex;align-items:center;gap:16px}.brand img{height:56px;width:auto}.brand h1{margin:0;font-size:1.65rem;letter-spacing:-.03em}.brand p{margin:3px 0 0;color:var(--muted);font-size:.92rem}.userbar{display:flex;align-items:center;gap:12px}.who{text-align:right}.who strong,.who span{display:block}.who span{font-size:.78rem;color:var(--muted);margin-top:2px}.sync{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.84rem}.sync-dot{width:9px;height:9px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 4px rgba(184,121,0,.10)}.sync-dot.ok{background:var(--green);box-shadow:0 0 0 4px rgba(24,135,90,.11)}.sync-dot.bad{background:var(--danger);box-shadow:0 0 0 4px rgba(196,67,67,.10)}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.hero{display:grid;grid-template-columns:1.35fr .65fr;gap:14px;margin-bottom:14px}.intro{padding:22px}.eyebrow{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--navy)}.intro h2{font-size:clamp(1.4rem,3vw,2.1rem);letter-spacing:-.035em;margin:7px 0 8px}.intro p{margin:0;color:var(--muted);line-height:1.5;max-width:850px}.legend{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}.pill{border-radius:999px;padding:5px 9px;font-size:.73rem;font-weight:800;border:1px solid transparent;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}.pill.green{color:#12633f;background:#e9f6ef;border-color:#bfe5cf}.pill.amber{color:#835a00;background:#fff5d8;border-color:#f0d798}.pill.red{color:#9b3232;background:#fff0f0;border-color:#efc1c1}.pill.blue{color:#285b91;background:#edf5fd;border-color:#c9dcf0}
+    .searchbox{padding:20px;display:flex;flex-direction:column;justify-content:center}.searchbox label,.selectbox label{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800;margin-bottom:7px}.searchrow{display:flex;gap:8px}.searchrow input{flex:1;min-width:0;background:#fff;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px 13px;outline:none}.searchrow input:focus,select:focus{border-color:#6d80bc;box-shadow:0 0 0 3px rgba(36,55,122,.08)}.btn{border:none;border-radius:10px;padding:10px 13px;font-weight:800}.btn.primary{background:var(--navy);color:#fff}.btn.secondary{background:#f3f6f8;color:var(--text);border:1px solid var(--line)}.btn:disabled{opacity:.42;cursor:not-allowed}
+    .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0}.stat{padding:16px}.stat span{display:block;color:var(--muted);font-size:.73rem;text-transform:uppercase;letter-spacing:.08em;font-weight:800}.stat strong{display:block;font-size:1.85rem;letter-spacing:-.045em;margin-top:4px}.stat small{color:var(--muted)}
+    .toolbar{display:flex;gap:10px;justify-content:space-between;align-items:end;padding:12px;margin-bottom:12px;flex-wrap:wrap}.filterset{display:flex;gap:7px;flex-wrap:wrap}.filterbtn{background:#fff;border:1px solid var(--line);color:var(--muted);border-radius:9px;padding:8px 10px;font-weight:750}.filterbtn.active{color:var(--navy);border-color:#8796c9;background:#f1f4ff}.selectset{display:flex;gap:9px;flex-wrap:wrap;margin-left:auto}.selectbox{display:flex;flex-direction:column}.selectbox select{background:#fff;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:8px 10px;min-width:190px}.count{color:var(--muted);font-size:.88rem;align-self:center}
+    .tablewrap{overflow:auto;border-radius:var(--radius)}table{border-collapse:separate;border-spacing:0;width:100%;min-width:1240px;background:#fff}th,td{padding:11px;border-bottom:1px solid var(--line);vertical-align:middle}th{position:sticky;top:0;background:#f7f9fb;color:#647286;text-align:left;font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;z-index:2}tbody tr:hover{background:#fafcff}tbody tr:last-child td{border-bottom:none}.person strong{display:block}.person small,.sub{display:block;color:var(--muted);font-size:.72rem;margin-top:3px}.sitecell{max-width:260px;font-size:.82rem}.licence{font-variant-numeric:tabular-nums;letter-spacing:.03em}.statuscell{font-weight:800}.ragdot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px}.ragdot.green{background:var(--green)}.ragdot.amber{background:var(--amber)}.ragdot.red{background:var(--danger)}.empty{padding:46px;text-align:center;color:var(--muted)}
+    dialog{width:min(900px,calc(100vw - 30px));padding:0;border:none;border-radius:18px;background:#fff;color:var(--text);box-shadow:0 30px 100px rgba(0,0,0,.25)}dialog::backdrop{background:rgba(20,31,46,.38);backdrop-filter:blur(2px)}.modalhead{display:flex;justify-content:space-between;align-items:flex-start;padding:20px 22px;border-bottom:1px solid var(--line)}.modalhead h3{margin:3px 0 0;font-size:1.45rem}.closebtn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#f5f7f9;color:var(--text);font-size:1.15rem}.modalbody{padding:22px}.officerhero{display:flex;justify-content:space-between;gap:18px;align-items:center;margin-bottom:16px}.officerhero p{margin:4px 0;color:var(--muted)}.meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 18px}.meta-card{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:12px}.meta-card span{display:block;font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;font-weight:800}.meta-card strong{display:block;margin-top:4px;font-size:.92rem}.booking-list{display:grid;gap:8px}.booking{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.booking strong{display:block}.booking span{display:block;color:var(--muted);font-size:.8rem;margin-top:3px}.modalactions{display:flex;justify-content:flex-end;margin-top:18px}
+    .auth-gate{position:fixed;inset:0;z-index:10000;background:rgba(244,246,248,.97);display:flex;align-items:center;justify-content:center;padding:24px}.auth-card{width:min(460px,100%);padding:28px}.auth-brand{display:flex;align-items:center;gap:14px;margin-bottom:22px}.auth-brand img{height:52px}.auth-brand h2{margin:0;font-size:1.35rem}.auth-brand p{margin:3px 0 0;color:var(--muted);font-size:.84rem}.auth-card label{display:block;font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800;margin:14px 0 7px}.auth-card input{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px 13px}.auth-card .btn{width:100%;margin-top:18px}.auth-message{min-height:20px;margin-top:12px;color:var(--muted);font-size:.84rem}.auth-message.error{color:var(--danger)}.auth-note{font-size:.78rem;color:var(--muted);line-height:1.5;margin-top:14px}
+    .loading-overlay{position:fixed;inset:0;z-index:9000;background:rgba(244,246,248,.94);display:flex;align-items:center;justify-content:center;padding:24px}.loading-card{width:min(480px,100%);padding:26px;text-align:center}.loading-card img{height:48px}.loading-card h3{margin:14px 0 6px}.loading-card p{margin:0;color:var(--muted)}.loading-track{height:8px;background:#e6eaf0;border-radius:999px;overflow:hidden;margin:20px 0 8px}.loading-bar{height:100%;width:0;background:var(--navy);transition:width .25s ease}.loading-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:.78rem}
+    @media(max-width:1000px){.hero{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.topbar{align-items:flex-start}.userbar{flex-wrap:wrap;justify-content:flex-end}.meta-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:650px){.shell{padding:12px}.topbar{display:block}.userbar{margin-top:14px;justify-content:flex-start}.who{text-align:left}.stats{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:1/-1}.selectset{margin-left:0;width:100%}.selectbox{flex:1}.selectbox select{width:100%;min-width:0}.meta-grid{grid-template-columns:1fr}.officerhero{align-items:flex-start;flex-direction:column}}
+  </style>
 </head>
-
 <body>
-
-    <main class="page">
-        <section class="card">
-
-            <h1>SIA Compliance</h1>
-
-            <div class="subtitle">
-                TALOS Compliance Dashboard
-            </div>
-
-            <div class="status">
-                Dashboard configuration in progress
-            </div>
-
-            <div class="message">
-                Daily SIA compliance data will be displayed here once the
-                automated C247 data feed has been connected.
-            </div>
-
-            <div class="footer">
-                Securit Group Ltd.
-            </div>
-
-        </section>
-    </main>
-
+<div class="auth-gate" id="authGate">
+  <section class="auth-card card" id="loginPanel">
+    <div class="auth-brand"><img src="securit-logo.png" alt="Securit"><div><h2>SIA Compliance Login</h2><p>Secure TALOS compliance access</p></div></div>
+    <form id="loginForm"><label for="loginEmail">Email address</label><input id="loginEmail" type="email" autocomplete="username" required><label for="loginPin">PIN</label><input id="loginPin" type="password" autocomplete="current-password" required><button class="btn primary" id="loginBtn" type="submit">Sign in</button><div class="auth-message" id="loginMessage"></div></form>
+  </section>
+  <section class="auth-card card hidden" id="changePinPanel">
+    <div class="auth-brand"><img src="securit-logo.png" alt="Securit"><div><h2>Set a new PIN</h2><p>Your account requires a PIN change before continuing.</p></div></div>
+    <form id="changePinForm"><label for="newPin">New PIN</label><input id="newPin" type="password" autocomplete="new-password" required><label for="confirmPin">Confirm new PIN</label><input id="confirmPin" type="password" autocomplete="new-password" required><button class="btn primary" id="changePinBtn" type="submit">Update PIN</button><div class="auth-message" id="changePinMessage"></div></form>
+  </section>
+</div>
+<div class="loading-overlay hidden" id="loadingOverlay"><section class="loading-card card"><img src="securit-logo.png" alt="Securit"><h3 id="loadingText">Loading SIA compliance data…</h3><p id="loadingStage">Initialising secure session</p><div class="loading-track"><div class="loading-bar" id="loadingBar"></div></div><div class="loading-meta"><span>Live C247 snapshot</span><span id="loadingPercent">0%</span></div></section></div>
+<main class="shell">
+  <header class="topbar"><div class="brand"><img src="securit-logo.png" alt="Securit"><div><h1>SIA Compliance</h1><p>Securit live licence register</p></div></div><div class="userbar"><div class="who"><strong id="signedInName">Signed in</strong><span id="signedInEmail"></span></div><button class="btn secondary" id="logoutBtn" type="button">Sign out</button><div class="sync"><span class="sync-dot" id="syncDot"></span><span id="syncText">Waiting for authentication…</span></div></div></header>
+  <section class="hero"><div class="card intro"><span class="eyebrow">TALOS Compliance</span><h2>Live SIA licence position</h2><p>Daily C247 licence checks consolidated by officer. Status combines C247 verification results with licence expiry risk.</p><div class="legend"><span class="pill green">Compliant</span><span class="pill amber">Review / expiring</span><span class="pill red">Critical</span><span class="pill blue">Multiple bookings consolidated</span></div></div><div class="card searchbox"><label for="searchInput">Search register</label><div class="searchrow"><input id="searchInput" type="search" placeholder="Name, Staff ID, badge or site"><button class="btn primary" id="searchBtn" type="button">Search</button></div></div></section>
+  <section class="stats" id="stats"><div class="card stat"><span>Officers</span><strong id="statTotal">0</strong><small>Unique staff IDs</small></div><div class="card stat"><span>Compliant</span><strong id="statValid">0</strong><small>No current SIA issue</small></div><div class="card stat"><span>Name mismatch</span><strong id="statMismatch">0</strong><small>C247 / SIA identity review</small></div><div class="card stat"><span>Licence not found</span><strong id="statNotFound">0</strong><small>Immediate review</small></div><div class="card stat"><span>Expiring ≤30 days</span><strong id="statExpiring">0</strong><small>Renewal attention</small></div></section>
+  <section class="card toolbar"><div class="filterset" id="statusFilters"><button class="filterbtn active" data-status="all">All</button><button class="filterbtn" data-status="red">Critical</button><button class="filterbtn" data-status="amber">Review</button><button class="filterbtn" data-status="green">Compliant</button></div><div class="selectset"><div class="selectbox"><label for="siteFilter">Site</label><select id="siteFilter"><option value="all">All sites</option></select></div><div class="selectbox"><label for="sectorFilter">SIA sector</label><select id="sectorFilter"><option value="all">All sectors</option></select></div><div class="selectbox"><label for="roleFilter">Role</label><select id="roleFilter"><option value="all">All roles</option></select></div></div><div class="count" id="resultCount">0 officers shown</div></section>
+  <section class="card tablewrap"><table><thead><tr><th>Officer</th><th>SIA number</th><th>Sector</th><th>Expiry</th><th>Site(s)</th><th>Role(s)</th><th>Last checked</th><th>Status</th><th></th></tr></thead><tbody id="officerRows"></tbody></table><div class="empty hidden" id="emptyState">No matching records.</div></section>
+</main>
+<dialog id="officerDialog"><div class="modalhead"><div><span class="eyebrow">SIA licence record</span><h3 id="modalName">Officer</h3></div><button class="closebtn" id="closeDialog" aria-label="Close">×</button></div><div class="modalbody"><div class="officerhero"><div><p id="modalStaff"></p><p id="modalStatusText"></p></div><div id="modalStatus"></div></div><div class="meta-grid"><div class="meta-card"><span>SIA number</span><strong id="modalLicence"></strong></div><div class="meta-card"><span>Licence sector</span><strong id="modalSector"></strong></div><div class="meta-card"><span>Expiry</span><strong id="modalExpiry"></strong></div><div class="meta-card"><span>C247 name</span><strong id="modalC247Name"></strong></div><div class="meta-card"><span>SIA returned name</span><strong id="modalSIAName"></strong></div><div class="meta-card"><span>Last checked</span><strong id="modalChecked"></strong></div></div><span class="eyebrow">Bookings in daily snapshot</span><div class="booking-list" id="modalBookings"></div><div class="modalactions"><button class="btn secondary" id="closeDialog2">Close</button></div></div></dialog>
+<script src="config.js"></script>
+<script>
+const AUTH_STORAGE_KEY="securitTrainingAuthV1"; // Shared with Training so the same TALOS session is reused on this GitHub Pages origin.
+let rawRows=[],officers=[],activeStatus="all",activeSite="all",activeSector="all",activeRole="all",selectedOfficer=null,authState={email:"",token:"",displayName:""},loadingProgress=0,loadingTick=null;
+const el=id=>document.getElementById(id);
+function normaliseSpace(v){return String(v??"").trim().replace(/\s+/g," ")}
+function normaliseKey(v){return normaliseSpace(v).toLowerCase()}
+function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,s=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[s]))}
+function parseUKDate(value){const m=String(value||"").trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);if(!m)return null;const d=new Date(Number(m[3]),Number(m[2])-1,Number(m[1]));return Number.isNaN(d.getTime())?null:d}
+function parseTimestamp(value){const s=String(value||"").trim();if(!s)return null;const d=new Date(s.replace(" ","T"));return Number.isNaN(d.getTime())?null:d}
+function formatDateUK(value){const d=value instanceof Date?value:parseUKDate(value);return d?d.toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"}):"—"}
+function formatDateTimeUK(value){const d=value instanceof Date?value:parseTimestamp(value);return d?d.toLocaleString("en-GB",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}):"—"}
+function daysUntil(date){if(!date)return null;const today=new Date();today.setHours(0,0,0,0);const d=new Date(date);d.setHours(0,0,0,0);return Math.ceil((d-today)/86400000)}
+function severityFor(record){const status=normaliseKey(record.ComplianceStatus),expiry=parseUKDate(record.ExpiryDate),days=daysUntil(expiry);if(expiry&&days<0)return {code:"red",label:"Expired",detail:`Expired ${formatDateUK(expiry)}`};if(status.includes("licence not found"))return {code:"red",label:"Licence not found",detail:"C247 could not confirm this licence"};if(status.includes("name does not match"))return {code:"amber",label:"Name mismatch",detail:"C247 name does not match the SIA response"};if(status.includes("not recently checked"))return {code:"amber",label:"Check overdue",detail:"Licence has not been checked recently"};if(expiry&&days<=30)return {code:"amber",label:"Expiring ≤30 days",detail:`Expires in ${Math.max(0,days)} day${days===1?"":"s"}`};if(expiry&&days<=60)return {code:"amber",label:"Expiring ≤60 days",detail:`Expires in ${days} days`};if(status.includes("confirmed as valid"))return {code:"green",label:"Compliant",detail:"Licence confirmed as valid"};return {code:"amber",label:normaliseSpace(record.ComplianceStatus)||"Review",detail:"Unrecognised C247 status requires review"}}
+function severityRank(code){return code==="red"?3:code==="amber"?2:1}
+function buildOfficers(rows){const map=new Map();for(const r of rows){const staffId=normaliseSpace(r.StaffID),licence=normaliseSpace(r.SIANumber).replace(/\s+/g,"");if(!staffId)continue;const key=`${staffId}|${licence}`;const sev=severityFor(r);if(!map.has(key))map.set(key,{staffId,licence,firstName:normaliseSpace(r.FirstName),lastName:normaliseSpace(r.LastName),sector:normaliseSpace(r.SIASector),expiry:r.ExpiryDate||"",dateChecked:r.DateChecked||"",complianceStatus:normaliseSpace(r.ComplianceStatus),siaFirst:normaliseSpace(r.SIAFirstName),siaLast:normaliseSpace(r.SIALastName),severity:sev,bookings:[]});const o=map.get(key);o.bookings.push({venue:normaliseSpace(r.Venue),role:normaliseSpace(r.Role),start:r.BookingStart||"",end:r.BookingEnd||""});if(severityRank(sev.code)>severityRank(o.severity.code))o.severity=sev;if(parseTimestamp(r.DateChecked)>parseTimestamp(o.dateChecked)){o.dateChecked=r.DateChecked;o.complianceStatus=normaliseSpace(r.ComplianceStatus);o.siaFirst=normaliseSpace(r.SIAFirstName);o.siaLast=normaliseSpace(r.SIALastName);o.sector=normaliseSpace(r.SIASector)||o.sector;o.expiry=r.ExpiryDate||o.expiry} }
+  return [...map.values()].map(o=>{o.fullName=normaliseSpace(`${o.FirstName||o.firstName||""} ${o.LastName||o.lastName||""}`);o.sites=[...new Set(o.bookings.map(b=>b.venue).filter(Boolean))];o.roles=[...new Set(o.bookings.map(b=>b.role).filter(Boolean))];return o}).sort((a,b)=>a.lastName.localeCompare(b.lastName,"en-GB")||a.firstName.localeCompare(b.firstName,"en-GB"));}
+function badge(sev){return `<span class="pill ${sev.code}">${escapeHtml(sev.label)}</span>`}
+function filteredOfficers(){const q=normaliseKey(el("searchInput").value);return officers.filter(o=>{const statusOk=activeStatus==="all"||o.severity.code===activeStatus;const siteOk=activeSite==="all"||o.sites.some(s=>normaliseKey(s)===activeSite);const sectorOk=activeSector==="all"||normaliseKey(o.sector)===activeSector;const roleOk=activeRole==="all"||o.roles.some(r=>normaliseKey(r)===activeRole);const hay=[o.staffId,o.fullName,o.licence,o.sector,...o.sites,...o.roles,o.complianceStatus].join(" ").toLowerCase();return statusOk&&siteOk&&sectorOk&&roleOk&&(!q||hay.includes(q))})}
+function animateNumber(node,target){const start=Number(String(node.textContent).replace(/[^0-9.-]/g,""))||0,diff=target-start,duration=450,startTime=performance.now();function step(now){const t=Math.min(1,(now-startTime)/duration),e=1-Math.pow(1-t,3);node.textContent=Math.round(start+diff*e).toLocaleString("en-GB");if(t<1)requestAnimationFrame(step)}requestAnimationFrame(step)}
+function renderStats(){const uniqueStaff=new Set(officers.map(o=>o.staffId)).size;animateNumber(el("statTotal"),uniqueStaff);animateNumber(el("statValid"),new Set(officers.filter(o=>o.severity.code==="green").map(o=>o.staffId)).size);animateNumber(el("statMismatch"),new Set(officers.filter(o=>normaliseKey(o.complianceStatus).includes("name does not match")).map(o=>o.staffId)).size);animateNumber(el("statNotFound"),new Set(officers.filter(o=>normaliseKey(o.complianceStatus).includes("licence not found")).map(o=>o.staffId)).size);animateNumber(el("statExpiring"),new Set(officers.filter(o=>{const d=daysUntil(parseUKDate(o.expiry));return d!==null&&d>=0&&d<=30}).map(o=>o.staffId)).size)}
+function rowHtml(o){return `<tr><td class="person"><strong>${escapeHtml(o.fullName||"Unnamed officer")}</strong><small>Staff ID ${escapeHtml(o.staffId)}${o.bookings.length>1?` · ${o.bookings.length} bookings`:""}</small></td><td class="licence">${escapeHtml(o.licence||"—")}</td><td>${escapeHtml(o.sector||"—")}</td><td>${escapeHtml(formatDateUK(o.expiry))}</td><td class="sitecell">${escapeHtml(o.sites.join(" · ")||"—")}</td><td>${escapeHtml(o.roles.join(" · ")||"—")}</td><td>${escapeHtml(formatDateTimeUK(o.dateChecked))}</td><td class="statuscell"><span class="ragdot ${o.severity.code}"></span>${escapeHtml(o.severity.label)}</td><td><button class="btn secondary detailsbtn" data-key="${escapeHtml(o.staffId+'|'+o.licence)}">View record</button></td></tr>`}
+function render(){const list=filteredOfficers();el("officerRows").innerHTML=list.map(rowHtml).join("");el("emptyState").classList.toggle("hidden",list.length!==0);el("resultCount").textContent=`${list.length} licence record${list.length===1?"":"s"} shown`;document.querySelectorAll(".detailsbtn").forEach(b=>b.addEventListener("click",()=>openOfficer(b.dataset.key)))}
+function populateSelect(id,values,label){const select=el(id),current=select.value||"all",unique=[...new Set(values.filter(Boolean))].sort((a,b)=>a.localeCompare(b,"en-GB"));select.innerHTML=`<option value="all">${label}</option>`+unique.map(v=>`<option value="${escapeHtml(normaliseKey(v))}">${escapeHtml(v)}</option>`).join("");select.value=[...select.options].some(o=>o.value===current)?current:"all"}
+function populateFilters(){populateSelect("siteFilter",officers.flatMap(o=>o.sites),"All sites");populateSelect("sectorFilter",officers.map(o=>o.sector),"All sectors");populateSelect("roleFilter",officers.flatMap(o=>o.roles),"All roles")}
+function openOfficer(key){const o=officers.find(x=>`${x.staffId}|${x.licence}`===key);if(!o)return;selectedOfficer=o;el("modalName").textContent=o.fullName||"Unnamed officer";el("modalStaff").textContent=`Staff ID ${o.staffId}`;el("modalStatusText").textContent=o.severity.detail;el("modalStatus").innerHTML=badge(o.severity);el("modalLicence").textContent=o.licence||"—";el("modalSector").textContent=o.sector||"—";el("modalExpiry").textContent=formatDateUK(o.expiry);el("modalC247Name").textContent=normaliseSpace(`${o.firstName} ${o.lastName}`)||"—";el("modalSIAName").textContent=normaliseSpace(`${o.siaFirst} ${o.siaLast}`)||"No returned name";el("modalChecked").textContent=formatDateTimeUK(o.dateChecked);el("modalBookings").innerHTML=o.bookings.map(b=>`<div class="booking"><strong>${escapeHtml(b.venue||"No venue")}</strong><span>${escapeHtml(b.role||"No role")} · ${escapeHtml(formatDateUK(b.start))} to ${escapeHtml(formatDateUK(b.end))}</span></div>`).join("")||'<div class="booking"><strong>No booking data</strong></div>';el("officerDialog").showModal()}
+function boolValue(v){return v===true||String(v).toLowerCase()==="true"||String(v).toLowerCase()==="yes"}
+function setAuthMessage(id,message,type=""){const node=el(id);node.textContent=message||"";node.className=`auth-message${type?" "+type:""}`}
+function saveAuth(){localStorage.setItem(AUTH_STORAGE_KEY,JSON.stringify({email:authState.email,token:authState.token,displayName:authState.displayName}))}
+function clearAuth(){authState={email:"",token:"",displayName:""};localStorage.removeItem(AUTH_STORAGE_KEY)}
+function getStoredAuth(){try{const parsed=JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY)||"{}");if(parsed.email&&parsed.token)return parsed}catch(e){}return null}
+function showLogin(message=""){el("authGate").classList.remove("hidden");el("loginPanel").classList.remove("hidden");el("changePinPanel").classList.add("hidden");setAuthMessage("loginMessage",message,message?"error":"");el("loginPin").value="";hideLoading();setTimeout(()=>el("loginEmail").focus(),0)}
+function showChangePin(){el("authGate").classList.remove("hidden");el("loginPanel").classList.add("hidden");el("changePinPanel").classList.remove("hidden");el("newPin").value="";el("confirmPin").value="";setAuthMessage("changePinMessage","");hideLoading();setTimeout(()=>el("newPin").focus(),0)}
+function showApp(){/* Intentionally do not display displayName: the shared auth service currently returns the wrong name for some users. */el("signedInName").textContent="Signed in";el("signedInEmail").textContent=authState.email;el("authGate").classList.add("hidden")}
+async function postJson(url,body){const response=await fetch(url,{method:"POST",cache:"no-store",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});let data={};try{data=await response.json()}catch(e){}return {response,data}}
+function base64ToBytes(value){const raw=atob(value);return Uint8Array.from(raw,c=>c.charCodeAt(0))}function bytesToBase64(bytes){let s="";bytes.forEach(b=>s+=String.fromCharCode(b));return btoa(s)}
+async function deriveVerifier(pin,saltBase64){const material=await crypto.subtle.importKey("raw",new TextEncoder().encode(pin),"PBKDF2",false,["deriveBits"]);const bits=await crypto.subtle.deriveBits({name:"PBKDF2",salt:base64ToBytes(saltBase64),iterations:210000,hash:"SHA-256"},material,256);return bytesToBase64(new Uint8Array(bits))}
+function generateSalt(){const bytes=new Uint8Array(16);crypto.getRandomValues(bytes);return bytesToBase64(bytes)}
+function setLoadingProgress(value,stage){loadingProgress=Math.max(0,Math.min(100,Math.round(value)));el("loadingBar").style.width=`${loadingProgress}%`;el("loadingPercent").textContent=`${loadingProgress}%`;if(stage)el("loadingStage").textContent=stage}
+function showLoading(){el("loadingOverlay").classList.remove("hidden");loadingProgress=0;setLoadingProgress(8,"Validating live register connection");if(loadingTick)clearInterval(loadingTick);loadingTick=setInterval(()=>{if(loadingProgress<92)setLoadingProgress(loadingProgress+Math.max(1,Math.round((92-loadingProgress)/7)),"Loading and consolidating licence records")},300)}
+function hideLoading(){if(loadingTick){clearInterval(loadingTick);loadingTick=null}setLoadingProgress(100,"Dashboard ready");setTimeout(()=>el("loadingOverlay").classList.add("hidden"),300)}
+async function login(email,pin){const auth=window.SECURIT_AUTH||{};if(!auth.getSalt||!auth.login)throw new Error("Authentication endpoints are not configured.");const saltResult=await postJson(auth.getSalt,{email});if(!saltResult.data?.success||!saltResult.data?.salt)throw new Error("Invalid email or PIN.");const verifier=await deriveVerifier(pin,saltResult.data.salt);const loginResult=await postJson(auth.login,{email,verifier});if(!loginResult.response.ok||!loginResult.data?.success)throw new Error(loginResult.data?.message||"Invalid email or PIN.");authState={email,token:loginResult.data.token,displayName:loginResult.data.displayName||""};saveAuth();if(boolValue(loginResult.data.mustChangePassword)){showChangePin();return false}showApp();await loadData();return true}
+async function changePin(newPin){const auth=window.SECURIT_AUTH||{};if(!auth.changePin)throw new Error("Change PIN endpoint is not configured.");const newSalt=generateSalt(),newVerifier=await deriveVerifier(newPin,newSalt);const result=await postJson(auth.changePin,{email:authState.email,token:authState.token,newSalt,newVerifier});if(!result.response.ok||!result.data?.success)throw new Error(result.data?.message||"PIN could not be updated.");showApp();await loadData()}
+async function validateStoredSession(){const stored=getStoredAuth();if(!stored){showLogin();return}authState={email:stored.email,token:stored.token,displayName:stored.displayName||""};const auth=window.SECURIT_AUTH||{};if(!auth.validate){clearAuth();showLogin("Authentication is not configured.");return}try{const result=await postJson(auth.validate,{email:authState.email,token:authState.token});if(!result.response.ok||!result.data?.success)throw new Error("Session invalid or expired.");authState.displayName=result.data.displayName||authState.displayName;saveAuth();if(boolValue(result.data.mustChangePassword)){showChangePin();return}showApp();await loadData()}catch(err){clearAuth();showLogin("Your session has expired. Please sign in again.")}}
+async function loadData(){const dot=el("syncDot"),txt=el("syncText");showLoading();try{const apiUrl=String(window.SECURIT_SIA_API_URL||"").trim();if(!apiUrl)throw new Error("SIA API URL is not configured in config.js");const response=await fetch(apiUrl,{method:"POST",cache:"no-store"});if(!response.ok)throw new Error(`API returned HTTP ${response.status}`);const payload=await response.json();if(!Array.isArray(payload))throw new Error("SIA API did not return an array");rawRows=payload;officers=buildOfficers(payload);populateFilters();renderStats();render();dot.className="sync-dot ok";txt.textContent=`Live register loaded · ${new Set(officers.map(o=>o.staffId)).size} officers · ${officers.length} licence records`;setLoadingProgress(100,"Dashboard ready")}catch(err){console.error(err);dot.className="sync-dot bad";txt.textContent="Live register unavailable";el("emptyState").classList.remove("hidden");el("emptyState").textContent=`SIA data could not be loaded: ${err.message}`}finally{hideLoading()}}
+el("loginForm").addEventListener("submit",async e=>{e.preventDefault();const email=normaliseSpace(el("loginEmail").value).toLowerCase(),pin=el("loginPin").value;if(!email||!pin)return;el("loginBtn").disabled=true;setAuthMessage("loginMessage","Signing in…");try{await login(email,pin)}catch(err){setAuthMessage("loginMessage",err.message||"Sign in failed.","error")}finally{el("loginBtn").disabled=false}});
+el("changePinForm").addEventListener("submit",async e=>{e.preventDefault();const pin=el("newPin").value,confirm=el("confirmPin").value;if(pin.length<4){setAuthMessage("changePinMessage","PIN must contain at least 4 characters.","error");return}if(pin!==confirm){setAuthMessage("changePinMessage","The PINs do not match.","error");return}el("changePinBtn").disabled=true;setAuthMessage("changePinMessage","Updating PIN…");try{await changePin(pin)}catch(err){setAuthMessage("changePinMessage",err.message||"PIN could not be updated.","error")}finally{el("changePinBtn").disabled=false}});
+el("logoutBtn").addEventListener("click",()=>{clearAuth();rawRows=[];officers=[];selectedOfficer=null;showLogin()});
+el("searchInput").addEventListener("input",render);el("searchBtn").addEventListener("click",render);document.querySelectorAll(".filterbtn").forEach(btn=>btn.addEventListener("click",()=>{activeStatus=btn.dataset.status;document.querySelectorAll(".filterbtn").forEach(b=>b.classList.toggle("active",b===btn));render()}));
+el("siteFilter").addEventListener("change",()=>{activeSite=el("siteFilter").value;render()});el("sectorFilter").addEventListener("change",()=>{activeSector=el("sectorFilter").value;render()});el("roleFilter").addEventListener("change",()=>{activeRole=el("roleFilter").value;render()});el("closeDialog").addEventListener("click",()=>el("officerDialog").close());el("closeDialog2").addEventListener("click",()=>el("officerDialog").close());
+validateStoredSession();
+</script>
 </body>
 </html>
