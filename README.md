@@ -13,3 +13,6 @@ Declaration rules currently implemented:
 - Labour Provider declared company is compared with the canonical Rolling Staff DB provider; material mismatch is amber.
 
 The loading screen is paced over a 60-second window based on an observed API runtime of about 42 seconds.
+
+
+Revision 6: combined API payload support, accepts either direct payload or Power Automate response wrapper. Packaged with site files at ZIP root for direct GitHub upload.
