@@ -68,3 +68,9 @@ Revision 9
 - Consolidates the dynamic module-column behaviour: switching SIA, Training, Declaration or PPAC off removes that column from the register entirely.
 - Name matching regression cases: Amir ---- / AMIR AMIR = compliant; Tony / Anthony and Steve / Steven or Stephen = amber review; genuine identity mismatches remain critical.
 - Licence not found remains the highest-priority issue and the only row type with the pulsing red outline.
+
+
+## r14
+- Provider comparison now normalises harmless company-name differences such as Ltd/Limited, punctuation and UK qualifiers.
+- Example: `SFM Limited` and `SFM (UK) Ltd` are treated as the same provider.
+- Genuine provider differences continue to show as amber Provider mismatch / review.
