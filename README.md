@@ -1,22 +1,15 @@
-# Securit SIA Compliance Dashboard
+# TALOS Master Compliance Dashboard
 
-Full GitHub Pages site for the TALOS SIA Compliance dashboard.
+Revision 5 converts the original SIA dashboard into the master officer compliance view.
 
-This revision includes:
-- severity sorting: red, amber, blue, green; alphabetical within each band
-- row colour coding
-- expiry alerting only at 31 days or less (blue 8–31, amber 0–7, red expired)
-- case-insensitive name comparison to suppress capitalisation-only mismatch flags
-- company/provider on headline rows
-- Training Compliance linked by Staff ID
-- responsible manager, training site and provider in View Record
-- WhatsApp training links
-- training certificate print/share controls
-- shared Training/TALOS authentication session without displaying the unreliable auth displayName
+The single Power Automate API payload is expected to contain `staff`, `sites`, the six training arrays, `declarations`, and `sia`. The web page joins those datasets by Staff ID and site.
 
+Main register columns: Officer, Company / Provider, Site(s), Manager, SIA Status, Training Status, Declaration Status.
 
-Revision notes:
-- Main register now shows separate SIA Status and Training Status columns with RAG dots.
-- Role column removed from the headline table (role remains available in record details/filtering).
-- Fully compliant SIA rows use normal white styling; colour wash is reserved for red/amber/blue exceptions.
-.
+Declaration rules currently implemented:
+- Labour Provider staff: declaration required on every site.
+- Direct SecurIT staff: declaration required only where any current SIA booking is an MCL/McLaren site.
+- Direct SecurIT staff on non-MCL sites: declaration shows Not required (black).
+- Labour Provider declared company is compared with the canonical Rolling Staff DB provider; material mismatch is amber.
+
+The loading screen is paced over a 60-second window based on an observed API runtime of about 42 seconds.

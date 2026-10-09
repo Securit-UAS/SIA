@@ -1,7 +1,6 @@
 // Securit SIA Compliance dashboard configuration
 // Uses the shared TALOS authentication flows already used by Training.
 window.SECURIT_SIA_API_URL = "https://default83caf35c4b184a57820900e447faa7.10.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/17/workflows/c839f80ae5314a8997c693dccf60fd95/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=iNQpx1uQwuRAZpwRmSCHer7iGXotIeAE7wHvznvvDz4";
-window.SECURIT_TRAINING_API_URL = "https://default83caf35c4b184a57820900e447faa7.10.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/00/workflows/5e3801774b7a4148bb94d16b111009ea/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=9yb8sgpsqsgR7I7cAcOAGMlRsqN37amqVE1DX70G4LE";
 
 window.SECURIT_AUTH = {
   getSalt: "https://default83caf35c4b184a57820900e447faa7.10.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/05/workflows/87f7b9e1e1eb4231a7ba99534433d5b8/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=iXxs-E_fronl-K1TiJ-AFwFeIYO1fVrCQfiF9JL13II",
