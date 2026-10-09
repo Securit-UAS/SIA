@@ -51,3 +51,9 @@ Revision 9
 - Licence Not Found rows are the only rows with the pulsing red perimeter.
 - Pulse is applied to the individual row cells so adjacent critical rows no longer appear as one grouped block.
 - Sort order now prioritises Licence Not Found, then critical name mismatch / other critical SIA issues, then amber review items, then lower-severity records.
+
+
+## Revision 11
+- Compliance module toggles now also hide/show their corresponding status columns in the main officer register.
+- Disabled modules continue to be excluded from overall status and row-colour calculations.
+- Toggle preferences remain stored locally as before.
