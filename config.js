@@ -1,3 +1,6 @@
+// TALOS Master Dashboard configuration
+// Compliance + Incident dashboards share the same authentication session.
+
 // Securit SIA Compliance dashboard configuration
 // Uses the shared TALOS authentication flows already used by Training.
 window.SECURIT_SIA_API_URL = "https://default83caf35c4b184a57820900e447faa7.10.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/17/workflows/c839f80ae5314a8997c693dccf60fd95/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=iNQpx1uQwuRAZpwRmSCHer7iGXotIeAE7wHvznvvDz4";
@@ -8,3 +11,5 @@ window.SECURIT_AUTH = {
   changePin: "https://default83caf35c4b184a57820900e447faa7.10.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/03/workflows/482d761e7f774b5db9bee5b81827cf51/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kkeFsWKGcfV4b2G2Br7jBNaqouapsWzGFnmVod9rwm4",
   validate: "https://default83caf35c4b184a57820900e447faa7.10.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/29/workflows/40dd6f1b2a504dd8aed177e59bab951e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=G2mJtM4TjLz6XAY2bUtrEt0x-viN2zThtrsafkW6nAI"
 };
+
+window.SECURIT_INCIDENT_API_URL = "https://default83caf35c4b184a57820900e447faa7.10.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/29/workflows/366a5eeb76764dad8ee4d6620b4c0d1b/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=J-5TCnYLpy7MsFbu_YCKPRD4cpJkIhc94kRoKD5vnBg";

@@ -1,76 +1,24 @@
-# TALOS Master Compliance Dashboard
+# TALOS Master Dashboard — r15
 
-Revision 7 builds on the combined master compliance payload and adds module-level control and clearer SIA risk presentation.
+This build combines the Master Compliance dashboard and Incident Dashboard in one GitHub Pages package.
 
-The single Power Automate API payload is expected to contain `staff`, `sites`, the six training arrays, `declarations`, and `sia`. The web page joins those datasets by Staff ID and site.
+## Navigation
+- `index.html` — Master Compliance
+- `incident.html` — Incident Dashboard
+- Top-bar buttons switch between Compliance and Incidents.
+- Both pages use the same TALOS authentication storage key, so an authenticated user can switch views without a second login (subject to normal session validation).
 
-Main register columns: Officer, Company / Provider, Site(s), Manager, SIA Status, Training Status, Declaration Status, PPAC Status.
+## C247 profile link
+The officer compliance card now includes **Open C247 Profile**.
 
-## Compliance module toggles
+Before opening C247, TALOS displays an information prompt explaining:
+- C247 changes will not appear in TALOS until the scheduled reconciliation at approximately 05:30.
+- Training and screening/declaration changes appear on the next dashboard refresh.
 
-SIA, Training and Declaration are enabled by default. PPAC is visible but disabled by default until a live PPAC data source is connected. Disabled modules remain visible but do not contribute to overall status, row colour or Critical/Review filtering. Toggle choices are remembered locally in the browser.
+The C247 profile URL is generated from the officer Staff ID:
+`https://c247.space/v1/staff_records.aspx?id={StaffID}`
 
-## SIA rules
+## Existing behaviour retained
+All r14 compliance logic is retained, including provider-name normalisation, module toggles, name matching, priority sorting and SIA licence-not-found treatment.
 
-- Expired or licence not found: red Critical.
-- Red SIA records are always pushed to the top of the list and their row border pulses red, regardless of module toggle state.
-- Material name mismatch, stale check, unrecognised licence sector, or expiry at 7 days or less: amber Review.
-- Expiry at 8–30 days: blue Information.
-- Accepted licence sectors: Security Guarding, Door Supervision and Close Protection.
-- Otherwise: green All in order.
-
-## Declaration rules
-
-- Labour Provider staff: declaration required on every site.
-- Direct SecurIT staff: declaration required only where any current SIA booking is an MCL/McLaren site.
-- Direct SecurIT staff on non-MCL sites: declaration shows Not required (black).
-- Labour Provider declared company is compared with the canonical Rolling Staff DB provider; material mismatch is amber.
-
-## PPAC placeholder rules
-
-- Direct SecurIT staff: Not Required unless currently deployed to a McLaren/MCL or Glencar site.
-- Direct SecurIT staff on McLaren/MCL or Glencar: Not Found until PPAC is linked.
-- Labour Provider staff: Not Found until PPAC is linked.
-- PPAC is OFF by default, so these placeholder results do not affect overall compliance yet.
-
-## Officer record
-
-- SIA now has its own headline status badge.
-- Officer headshot is shown top-right when available from the latest declaration.
-- If no usable image is available, a fixed `Image not available` placeholder is shown.
-
-The loading screen is paced over a 60-second window based on an observed API runtime of about 42 seconds.
-
-
-## Revision 8
-- Material SIA identity mismatches are now Critical/red even where the upstream C247 status is otherwise valid.
-- Cosmetic capitalisation, ordering, or additional-name differences are tolerated when the names materially match.
-- Critical identity mismatches inherit the existing top-of-register priority and pulsing red row treatment.
-
-Revision 9
-- Licence Not Found rows are the only rows with the pulsing red perimeter.
-- Pulse is applied to the individual row cells so adjacent critical rows no longer appear as one grouped block.
-- Sort order now prioritises Licence Not Found, then critical name mismatch / other critical SIA issues, then amber review items, then lower-severity records.
-
-
-## Revision 11
-- Compliance module toggles now also hide/show their corresponding status columns in the main officer register.
-- Disabled modules continue to be excluded from overall status and row-colour calculations.
-- Toggle preferences remain stored locally as before.
-
-
-## r13
-- Module toggles now physically rebuild the register table. Disabled modules have no header or cells in the table DOM, so the whole column disappears rather than being merely visually hidden.
-- Table minimum width reduced so the remaining columns close up cleanly when modules are disabled.
-
-
-## r13 changes
-- Consolidates the dynamic module-column behaviour: switching SIA, Training, Declaration or PPAC off removes that column from the register entirely.
-- Name matching regression cases: Amir ---- / AMIR AMIR = compliant; Tony / Anthony and Steve / Steven or Stephen = amber review; genuine identity mismatches remain critical.
-- Licence not found remains the highest-priority issue and the only row type with the pulsing red outline.
-
-
-## r14
-- Provider comparison now normalises harmless company-name differences such as Ltd/Limited, punctuation and UK qualifiers.
-- Example: `SFM Limited` and `SFM (UK) Ltd` are treated as the same provider.
-- Genuine provider differences continue to show as amber Provider mismatch / review.
+The supplied Incident Dashboard is retained as its own view and continues to use its existing incident API.
