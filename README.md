@@ -46,3 +46,8 @@ The loading screen is paced over a 60-second window based on an observed API run
 - Material SIA identity mismatches are now Critical/red even where the upstream C247 status is otherwise valid.
 - Cosmetic capitalisation, ordering, or additional-name differences are tolerated when the names materially match.
 - Critical identity mismatches inherit the existing top-of-register priority and pulsing red row treatment.
+
+Revision 9
+- Licence Not Found rows are the only rows with the pulsing red perimeter.
+- Pulse is applied to the individual row cells so adjacent critical rows no longer appear as one grouped block.
+- Sort order now prioritises Licence Not Found, then critical name mismatch / other critical SIA issues, then amber review items, then lower-severity records.
