@@ -57,3 +57,14 @@ Revision 9
 - Compliance module toggles now also hide/show their corresponding status columns in the main officer register.
 - Disabled modules continue to be excluded from overall status and row-colour calculations.
 - Toggle preferences remain stored locally as before.
+
+
+## r13
+- Module toggles now physically rebuild the register table. Disabled modules have no header or cells in the table DOM, so the whole column disappears rather than being merely visually hidden.
+- Table minimum width reduced so the remaining columns close up cleanly when modules are disabled.
+
+
+## r13 changes
+- Consolidates the dynamic module-column behaviour: switching SIA, Training, Declaration or PPAC off removes that column from the register entirely.
+- Name matching regression cases: Amir ---- / AMIR AMIR = compliant; Tony / Anthony and Steve / Steven or Stephen = amber review; genuine identity mismatches remain critical.
+- Licence not found remains the highest-priority issue and the only row type with the pulsing red outline.
