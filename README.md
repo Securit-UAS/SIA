@@ -40,3 +40,17 @@ Duplicate SIA licence logic refined: matching name + phone across different prov
 - C247-only additional middle-name detail is now a yellow Name review because it is not confirmed by the SIA return.
 - Minor spelling differences alongside extra SIA middle-name detail remain yellow rather than silently passing.
 - Existing exact-name, nickname, duplicate-licence and identity-conflict rules are retained.
+
+
+## r19 changes
+- Risk sorting now uses only enabled compliance modules. SIA-specific priorities and pulsing borders disappear when SIA is disabled.
+- Added Sort rows control: Risk priority, Officer A-Z, Provider A-Z, Site A-Z, Manager A-Z.
+- KPI totals now recalculate for selected Site and Company / Provider.
+- Module-specific KPI cards are hidden when their module is disabled.
+- The SIA 8-30 days status filter is hidden when SIA is disabled.
+
+## r20 changes
+- Simplified Compliance header: removed live-load status copy and descriptive subtitle text.
+- Centred navigation buttons in the header; user identity and Sign out sit on the far right.
+- Added Wall view navigation.
+- Added `wallboard.html`: privacy-safe summary view, hourly data refresh, 60-second rotation through All companies, SecurIT and each labour provider, with pause/resume.
