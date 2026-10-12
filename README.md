@@ -78,3 +78,12 @@ Adds Appraisal / Site Visit compliance to the master dashboard, including latest
 - Appraisal normalisation now accepts `headshot` and `fullBodyPhoto` (plus capitalised compatibility aliases).
 - Latest appraisal full-body photo can be opened from the Appraisal / Site Visit section in a dedicated viewer.
 - Existing compliance, incident and wallboard behaviour retained.
+
+## r25
+- Officer headshot thumbnail is now clickable.
+- Clicking the headshot opens the image in the existing large photo viewer.
+- Added a subtle zoom cursor/hover treatment so the thumbnail reads as interactive.
+
+## r26
+- Officers with no recorded appraisal now show `1st Visit Required` instead of `Requires visit`.
+- Full-body photo action wording now makes the enlarge behaviour explicit and uses a zoom cursor.
