@@ -71,3 +71,10 @@ Adds Appraisal / Site Visit compliance to the master dashboard, including latest
 ## r23
 - Fixed appraisal matching so the dashboard accepts both the original appraisal API field names and the cleaned camelCase field names.
 - Prevents valid visits appearing as 'Requires visit' when the API and frontend are briefly on different schema revisions.
+
+## r24
+- Officer profile image now uses declaration headshot first, then the latest appraisal/site-visit headshot, then the existing placeholder.
+- Broken declaration image URLs automatically fall through to the appraisal headshot.
+- Appraisal normalisation now accepts `headshot` and `fullBodyPhoto` (plus capitalised compatibility aliases).
+- Latest appraisal full-body photo can be opened from the Appraisal / Site Visit section in a dedicated viewer.
+- Existing compliance, incident and wallboard behaviour retained.
