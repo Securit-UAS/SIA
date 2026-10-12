@@ -66,3 +66,8 @@ Duplicate SIA licence logic refined: matching name + phone across different prov
 
 ## r22
 Adds Appraisal / Site Visit compliance to the master dashboard, including latest-visit scoring, due dates, officer-card detail, status dots, filtered row shading, and appraisal-aware KPI/sorting logic.
+
+
+## r23
+- Fixed appraisal matching so the dashboard accepts both the original appraisal API field names and the cleaned camelCase field names.
+- Prevents valid visits appearing as 'Requires visit' when the API and frontend are briefly on different schema revisions.
