@@ -28,3 +28,15 @@ The supplied Incident Dashboard is retained as its own view and continues to use
 - Same SIA licence across multiple C247 Staff IDs is a highest-priority critical issue.
 - If a duplicate licence also returns a materially different SIA name, status is `Licence identity conflict`.
 - Identity conflicts sort above `Licence not found` and use a stronger pulsing red row plus officer-card warning.
+
+
+## r17
+Duplicate SIA licence logic refined: matching name + phone across different providers is an amber review; same-provider duplicates, identity mismatch or phone mismatch remain critical red.
+
+
+## r18
+- Made middle-name matching directional.
+- SIA may contain additional middle-name detail without creating a mismatch when the C247 identity is otherwise an exact ordered match.
+- C247-only additional middle-name detail is now a yellow Name review because it is not confirmed by the SIA return.
+- Minor spelling differences alongside extra SIA middle-name detail remain yellow rather than silently passing.
+- Existing exact-name, nickname, duplicate-licence and identity-conflict rules are retained.

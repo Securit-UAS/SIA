@@ -119,10 +119,26 @@ function assessName(record){
   // Common shortened/legal-name forms are plausible matches but should still be reviewed.
   if(lastClose&&aliasName(cFirst,sFirst))return {code:"amber",label:"Name review",detail:"Likely shortened or common-name variation between C247 and SIA records"};
 
-  // Extra/missing middle names (with the same core identity) are review items rather than critical mismatches.
+  // Middle-name handling is deliberately asymmetric. The SIA register is the authoritative
+  // identity return, so extra middle-name detail on SIA is acceptable; extra name detail
+  // asserted only by C247 must be reviewed. Exact token containment is checked before
+  // tolerant typo matching so cases such as John Wilkinson -> JOHN PAUL WILKINSON pass green.
+  const orderedSubset=(small,big,matcher)=>{let j=0;for(const token of small){let found=false;while(j<big.length){if(matcher(token,big[j])){found=true;j++;break}j++}if(!found)return false}return true};
+  const exactToken=(a,b)=>a===b;
+  if(cTokens.length>=2&&sTokens.length>cTokens.length&&orderedSubset(cTokens,sTokens,exactToken))
+    return {code:"green",label:"All in order",detail:"SIA register contains additional middle-name detail; core C247 identity is confirmed"};
+  if(cTokens.length>=2&&sTokens.length>cTokens.length&&orderedSubset(cTokens,sTokens,tokenMatches))
+    return {code:"amber",label:"Name review",detail:"SIA register contains additional name detail and a minor spelling variation; review advised"};
+  if(sTokens.length>=2&&cTokens.length>sTokens.length&&orderedSubset(sTokens,cTokens,exactToken))
+    return {code:"amber",label:"Name review",detail:"C247 contains additional middle-name detail that is not returned by the SIA register"};
+  if(sTokens.length>=2&&cTokens.length>sTokens.length&&orderedSubset(sTokens,cTokens,tokenMatches))
+    return {code:"amber",label:"Name review",detail:"C247 contains additional name detail not fully confirmed by the SIA register"};
+
+  // Remaining same-core differences stay as review rather than critical where every token
+  // in the shorter name can still be accounted for.
   const matchCount=cTokens.filter(ct=>sTokens.some(st=>tokenMatches(ct,st))).length;
   const shorter=Math.min(cTokens.length,sTokens.length);
-  if(shorter>=2&&matchCount>=shorter&&cTokens.length!==sTokens.length)return {code:"amber",label:"Name review",detail:"Core name matches but one record contains additional or missing name elements"};
+  if(shorter>=2&&matchCount>=shorter&&cTokens.length!==sTokens.length)return {code:"amber",label:"Name review",detail:"Core name matches but the records contain different name elements"};
 
   return {code:"red",label:"Name mismatch",detail:"C247 profile name does not materially match the name returned by the SIA register"}
 }
@@ -174,26 +190,50 @@ function buildOfficers(rows){
     o.fullName=normaliseSpace(`${o.firstName} ${o.lastName}`);o.sites=[...new Set(o.bookings.map(b=>b.venue).filter(Boolean))];o.roles=[...new Set(o.bookings.map(b=>b.role).filter(Boolean))];o.staff=staffById.get(o.staffId)||null;o.training=trainingByStaff.get(o.staffId)||null;o.declaration=declarationsByStaff.get(o.staffId)||null;o.provider=o.staff?.contractor||"Not available";o.phone=o.staff?.phone||"";o.managers=managersForSites(o.sites,o.staff);o.manager=o.managers.join(" · ")||"Not assigned";o.trainingStatus=o.training?.overall||{code:"red",label:"No training match",detail:"No training record matched this Staff ID"};o.declarationStatus=declarationStatus(o);o.ppacStatus=ppacStatus(o);return o;
   });
 
-  // Cross-officer SIA collision check: the same licence number on more than one Staff ID is a
-  // critical verification issue. If the returned SIA name also materially differs, escalate the wording.
-  const licenceUsers=new Map();
-  for(const o of list){if(!o.licence)continue;const set=licenceUsers.get(o.licence)||new Set();set.add(o.staffId);licenceUsers.set(o.licence,set)}
+  // Cross-officer SIA collision check. A duplicated licence is not automatically critical:
+  // the same officer may legitimately have separate C247 records for different Labour Providers.
+  // That scenario is Review only when licence, identity and phone all agree and the providers differ.
+  const licenceGroups=new Map();
   for(const o of list){
-    const users=o.licence?licenceUsers.get(o.licence):null;
-    if(users&&users.size>1){
-      const nameAssessment=assessName({FirstName:o.firstName,LastName:o.lastName,SIAFirstName:o.siaFirst,SIALastName:o.siaLast});
-      o.siaStatus=nameAssessment.code==="red"
-        ?{code:"red",label:"Licence identity conflict",detail:`Critical: this SIA licence is linked to ${users.size} C247 Staff IDs and the SIA register returns a materially different name. Immediate verification required.`}
-        :{code:"red",label:"Duplicate licence",detail:`Critical: this SIA licence is linked to ${users.size} C247 Staff IDs. Immediate verification required.`};
-      o.identityConflict=true;
-    }
-    o.overall=effectiveOverall(o);
+    if(!o.licence)continue;
+    const group=licenceGroups.get(o.licence)||[];
+    group.push(o);
+    licenceGroups.set(o.licence,group);
   }
+  const sameOfficerName=(a,b)=>assessName({FirstName:a.firstName,LastName:a.lastName,SIAFirstName:b.firstName,SIALastName:b.lastName}).code!=="red";
+  const comparablePhone=o=>normaliseWhatsAppNumber(o.phone)||String(o.phone||"").replace(/\D/g,"");
+  for(const group of licenceGroups.values()){
+    const uniqueStaff=[...new Set(group.map(x=>x.staffId))];
+    if(uniqueStaff.length<2)continue;
+    const providers=[...new Set(group.map(x=>normaliseProvider(x.provider)).filter(Boolean))];
+    const phones=[...new Set(group.map(comparablePhone).filter(Boolean))];
+    const allPhonesPresent=group.every(x=>!!comparablePhone(x));
+    const c247NamesAgree=group.every((x,i)=>group.slice(i+1).every(y=>sameOfficerName(x,y)));
+    const siaNamesAgree=group.every(x=>assessName({FirstName:x.firstName,LastName:x.lastName,SIAFirstName:x.siaFirst,SIALastName:x.siaLast}).code!=="red");
+    const sameProvider=providers.length<=1;
+    const phoneConflict=!allPhonesPresent||phones.length!==1;
+    const seriousNameConflict=!c247NamesAgree||!siaNamesAgree;
+    const serious=seriousNameConflict||sameProvider||phoneConflict;
+    for(const o of group){
+      if(serious){
+        let reason="";
+        if(seriousNameConflict)reason="the C247/SIA identity details do not materially agree";
+        else if(sameProvider)reason="multiple C247 Staff IDs exist for the same provider";
+        else reason="the phone details do not consistently identify the same officer";
+        o.siaStatus={code:"red",label:seriousNameConflict?"Licence identity conflict":"Duplicate licence",detail:`Critical: this SIA licence is linked to ${uniqueStaff.length} C247 Staff IDs and ${reason}. Immediate verification required.`};
+        o.identityConflict=true;
+      }else{
+        o.siaStatus={code:"amber",label:"Duplicate licence review",detail:`Review: this SIA licence is linked to ${uniqueStaff.length} C247 Staff IDs. Name and phone match, but the records belong to different providers; this may be legitimate multi-provider employment.`};
+        o.identityConflict=false;
+      }
+    }
+  }
+  for(const o of list)o.overall=effectiveOverall(o);
   return list.sort(officerSort)
 }
 function badge(s){return `<span class="pill ${s.code}">${escapeHtml(s.label)}</span>`}
 function dotStatus(s){return `<span><span class="ragdot ${s.code}"></span>${escapeHtml(s.label)}</span>`}
-function siaIssuePriority(o){const label=normaliseKey(o?.siaStatus?.label);if(label==="licence identity conflict"||label==="duplicate licence")return 700;if(label==="licence not found")return 600;if(o?.siaStatus?.code==="red"&&label==="name mismatch")return 500;if(o?.siaStatus?.code==="red")return 450;if(o?.overall?.code==="amber")return 300;if(o?.siaStatus?.code==="amber")return 290;if(o?.overall?.code==="blue"||o?.siaStatus?.code==="blue")return 200;return 100}
+function siaIssuePriority(o){const label=normaliseKey(o?.siaStatus?.label);if(label==="licence identity conflict"||label==="duplicate licence")return 700;if(label==="duplicate licence review")return 320;if(label==="licence not found")return 600;if(o?.siaStatus?.code==="red"&&label==="name mismatch")return 500;if(o?.siaStatus?.code==="red")return 450;if(o?.overall?.code==="amber")return 300;if(o?.siaStatus?.code==="amber")return 290;if(o?.overall?.code==="blue"||o?.siaStatus?.code==="blue")return 200;return 100}
 function officerSort(a,b){return siaIssuePriority(b)-siaIssuePriority(a)||severityRank(b.overall.code)-severityRank(a.overall.code)||a.lastName.localeCompare(b.lastName,"en-GB",{sensitivity:"base"})||a.firstName.localeCompare(b.firstName,"en-GB",{sensitivity:"base"})}
 function filteredOfficers(){const q=normaliseKey(el("searchInput").value);return officers.filter(o=>{const statusOk=activeStatus==="all"||o.overall.code===activeStatus,siteOk=activeSite==="all"||o.sites.some(s=>normaliseKey(s)===activeSite),providerOk=activeProvider==="all"||normaliseKey(o.provider)===activeProvider,hay=[o.staffId,o.fullName,o.licence,o.provider,o.manager,o.sector,...o.sites,...o.roles,o.complianceStatus,o.declaration?.declaredProvider,o.declaration?.screeningOfficer].join(" ").toLowerCase();return statusOk&&siteOk&&providerOk&&(!q||hay.includes(q))}).sort(officerSort)}
 function animateNumber(node,target){const start=Number(String(node.textContent).replace(/[^0-9.-]/g,""))||0,diff=target-start,duration=350,startTime=performance.now();function step(now){const t=Math.min(1,(now-startTime)/duration),e=1-Math.pow(1-t,3);node.textContent=Math.round(start+diff*e).toLocaleString("en-GB");if(t<1)requestAnimationFrame(step)}requestAnimationFrame(step)}
