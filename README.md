@@ -49,16 +49,20 @@ Duplicate SIA licence logic refined: matching name + phone across different prov
 - Module-specific KPI cards are hidden when their module is disabled.
 - The SIA 8-30 days status filter is hidden when SIA is disabled.
 
-## r21 changes
+## r22 changes
 - Simplified Compliance header: removed live-load status copy and descriptive subtitle text.
 - Centred navigation buttons in the header; user identity and Sign out sit on the far right.
 - Added Wall view navigation.
 - Added `wallboard.html`: privacy-safe summary view, hourly data refresh, 60-second rotation through All companies, SecurIT and each labour provider, with pause/resume.
 
 
-## r21 wallboard
+## r22 wallboard
 - Wallboard rotation interval reduced to 30 seconds.
 - Provider selector can pause the wallboard on a chosen company; Auto rotate resumes rotation.
 - Expanded SIA, Training and Declaration module detail.
 - Added Top Issues and lowest-compliance ranking panels; ranking switches to sites when viewing a provider.
 - Added overall green/amber/red distribution strip.
+
+
+## r22
+Adds Appraisal / Site Visit compliance to the master dashboard, including latest-visit scoring, due dates, officer-card detail, status dots, filtered row shading, and appraisal-aware KPI/sorting logic.
