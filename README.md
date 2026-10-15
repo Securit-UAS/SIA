@@ -87,3 +87,10 @@ Adds Appraisal / Site Visit compliance to the master dashboard, including latest
 ## r26
 - Officers with no recorded appraisal now show `1st Visit Required` instead of `Requires visit`.
 - Full-body photo action wording now makes the enlarge behaviour explicit and uses a zoom cursor.
+
+## r27
+- Fixed duplicate officer rows caused by multiple SIA records/licence states for the same Staff ID.
+- The compliance register now produces exactly one officer row per Staff ID.
+- SIA status, licence, returned SIA name, sector and expiry are taken only from the most recently checked SIA record.
+- Historic/current booking rows are still combined so the officer retains all sites/bookings from the daily snapshot.
+- Older SIA alerts no longer override a newer valid SIA check.

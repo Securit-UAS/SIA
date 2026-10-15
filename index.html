@@ -183,20 +183,35 @@ function declarationStatus(officer){const d=officer.declaration,provider=officer
 function managersForSites(sites,staff){const names=[];for(const s of sites){const hit=siteManagerMap.get(normaliseKey(s));if(hit?.managerName&&hit.managerName!=="Not assigned")names.push(hit.managerName)}if(!names.length&&staff?.siteName){const hit=siteManagerMap.get(normaliseKey(staff.siteName));if(hit?.managerName&&hit.managerName!=="Not assigned")names.push(hit.managerName)}return [...new Set(names)]}
 function buildOfficers(rows){
   const map=new Map();
+  const rowCheckedTime=r=>parseTimestamp(r.DateChecked)?.getTime()||parseTimestamp(r.LastUpdated)?.getTime()||0;
   for(const r of rows){
-    const staffId=normaliseSpace(r.StaffID),licence=normaliseSpace(r.SIANumber).replace(/\s+/g,"");
+    const staffId=normaliseSpace(r.StaffID);
     if(!staffId)continue;
-    const key=`${staffId}|${licence}`,sev=severityFor(r);
-    if(!map.has(key))map.set(key,{staffId,licence,firstName:normaliseSpace(r.FirstName),lastName:normaliseSpace(r.LastName),sector:normaliseSpace(r.SIASector),expiry:r.ExpiryDate||"",dateChecked:r.DateChecked||"",complianceStatus:normaliseSpace(r.ComplianceStatus),siaFirst:normaliseSpace(r.SIAFirstName),siaLast:normaliseSpace(r.SIALastName),siaStatus:sev,bookings:[]});
-    const o=map.get(key);
+
+    // One dashboard row per Staff ID. Booking/site history is retained from all rows,
+    // but the SIA position itself comes only from the most recently checked record.
+    if(!map.has(staffId))map.set(staffId,{staffId,licence:"",firstName:"",lastName:"",sector:"",expiry:"",dateChecked:"",complianceStatus:"",siaFirst:"",siaLast:"",siaStatus:{code:"amber",label:"Review",detail:"No current SIA check selected"},bookings:[],siaCheckedTime:-1});
+
+    const o=map.get(staffId);
     o.bookings.push({venue:normaliseSpace(r.Venue),role:normaliseSpace(r.Role),start:r.BookingStart||"",end:r.BookingEnd||""});
-    if(severityRank(sev.code)>severityRank(o.siaStatus.code))o.siaStatus=sev;
-    if((parseTimestamp(r.DateChecked)?.getTime()||0)>(parseTimestamp(o.dateChecked)?.getTime()||0)){
-      o.dateChecked=r.DateChecked;o.complianceStatus=normaliseSpace(r.ComplianceStatus);o.siaFirst=normaliseSpace(r.SIAFirstName);o.siaLast=normaliseSpace(r.SIALastName);o.sector=normaliseSpace(r.SIASector)||o.sector;o.expiry=r.ExpiryDate||o.expiry;
+
+    const thisChecked=rowCheckedTime(r);
+    if(thisChecked>o.siaCheckedTime){
+      o.siaCheckedTime=thisChecked;
+      o.licence=normaliseSpace(r.SIANumber).replace(/\s+/g,"");
+      o.firstName=normaliseSpace(r.FirstName);
+      o.lastName=normaliseSpace(r.LastName);
+      o.sector=normaliseSpace(r.SIASector);
+      o.expiry=r.ExpiryDate||"";
+      o.dateChecked=r.DateChecked||"";
+      o.complianceStatus=normaliseSpace(r.ComplianceStatus);
+      o.siaFirst=normaliseSpace(r.SIAFirstName);
+      o.siaLast=normaliseSpace(r.SIALastName);
+      o.siaStatus=severityFor(r);
     }
   }
   const list=[...map.values()].map(o=>{
-    o.fullName=normaliseSpace(`${o.firstName} ${o.lastName}`);o.sites=[...new Set(o.bookings.map(b=>b.venue).filter(Boolean))];o.roles=[...new Set(o.bookings.map(b=>b.role).filter(Boolean))];o.staff=staffById.get(o.staffId)||null;o.training=trainingByStaff.get(o.staffId)||null;o.declaration=declarationsByStaff.get(o.staffId)||null;o.appraisal=appraisalsByStaff.get(o.staffId)||null;o.provider=o.staff?.contractor||"Not available";o.phone=o.staff?.phone||"";o.managers=managersForSites(o.sites,o.staff);o.manager=o.managers.join(" · ")||"Not assigned";o.trainingStatus=o.training?.overall||{code:"red",label:"No training match",detail:"No training record matched this Staff ID"};o.declarationStatus=declarationStatus(o);o.appraisalStatus=appraisalStatus(o.appraisal);o.ppacStatus=ppacStatus(o);return o;
+    delete o.siaCheckedTime;o.fullName=normaliseSpace(`${o.firstName} ${o.lastName}`);o.sites=[...new Set(o.bookings.map(b=>b.venue).filter(Boolean))];o.roles=[...new Set(o.bookings.map(b=>b.role).filter(Boolean))];o.staff=staffById.get(o.staffId)||null;o.training=trainingByStaff.get(o.staffId)||null;o.declaration=declarationsByStaff.get(o.staffId)||null;o.appraisal=appraisalsByStaff.get(o.staffId)||null;o.provider=o.staff?.contractor||"Not available";o.phone=o.staff?.phone||"";o.managers=managersForSites(o.sites,o.staff);o.manager=o.managers.join(" · ")||"Not assigned";o.trainingStatus=o.training?.overall||{code:"red",label:"No training match",detail:"No training record matched this Staff ID"};o.declarationStatus=declarationStatus(o);o.appraisalStatus=appraisalStatus(o.appraisal);o.ppacStatus=ppacStatus(o);return o;
   });
 
   // Cross-officer SIA collision check. A duplicated licence is not automatically critical:
