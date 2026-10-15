@@ -94,3 +94,10 @@ Adds Appraisal / Site Visit compliance to the master dashboard, including latest
 - SIA status, licence, returned SIA name, sector and expiry are taken only from the most recently checked SIA record.
 - Historic/current booking rows are still combined so the officer retains all sites/bookings from the daily snapshot.
 - Older SIA alerts no longer override a newer valid SIA check.
+
+## r28
+- Trevion is hard-filtered from the compliance register and wallboard provider rotation/totals.
+- Company / Provider is now a checkbox multi-select rather than a single-select dropdown.
+- Added Select all and Unselect all controls.
+- Provider selections persist locally between page loads.
+- Site and status filters continue to combine with the selected provider set.
