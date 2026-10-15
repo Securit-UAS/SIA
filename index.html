@@ -178,7 +178,15 @@ function buildAppraisalMap(payload){const map=new Map();for(const raw of(payload
 function addDays(date,days){const d=new Date(date);d.setDate(d.getDate()+days);return d}
 function daysSince(date){if(!date)return null;const today=dateOnly(new Date()),d=dateOnly(date);return Math.floor((today-d)/86400000)}
 function appraisalStatus(appraisal){if(!appraisal)return {code:"blue",label:"1st Visit Required",detail:"No appraisal / site visit has been recorded for this officer"};const visit=parseAnyDate(appraisal.visitDate);if(!visit)return {code:"blue",label:"1st Visit Required",detail:"A visit record exists but the visit date is unavailable"};const age=daysSince(visit),due=addDays(visit,30);if(age>45)return {code:"red",label:"Overdue",detail:`Last visit was ${age} days ago · target visit date was ${formatDateUK(due)}`};if(age>30)return {code:"blue",label:"Visit due",detail:`Last visit was ${age} days ago · target visit date was ${formatDateUK(due)}`};const vals=[appraisal.siteKnowledge,appraisal.communication,appraisal.problemSolving,appraisal.teamWork,appraisal.incidentReporting,appraisal.appearance,appraisal.timekeeping].map(Number).filter(Number.isFinite);if(!vals.length)return {code:"amber",label:"Review",detail:"Recent visit recorded but appraisal scores are unavailable"};const min=Math.min(...vals);if(min<=1)return {code:"red",label:"Action required",detail:`Recent appraisal contains a score of ${min}/5`};if(min===2)return {code:"amber",label:"Review",detail:"Recent appraisal contains a score of 2/5"};return {code:"green",label:"Current",detail:`Visited ${age} day${age===1?"":"s"} ago · all recorded scores are 3/5 or higher`}}
-function normaliseProvider(v){return normaliseSpace(v).toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g," ").split(" ").filter(Boolean).filter(x=>!["ltd","limited","plc","llp","uk","united","kingdom"].includes(x)).join(" ")}
+function normaliseProvider(v){
+  const n=normaliseSpace(v).toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g," ").split(" ").filter(Boolean).filter(x=>!["ltd","limited","plc","llp","uk","united","kingdom"].includes(x)).join(" ");
+  const aliases={
+    "lrs":"loyal reliance services",
+    "loyal reliance service":"loyal reliance services",
+    "loyal reliance services":"loyal reliance services"
+  };
+  return aliases[n]||n
+}
 function isSecuritProvider(v){const n=normaliseProvider(v);return n==="securit"||n==="secur it"||n==="securit group"}
 function isMclarenSite(v){const n=normaliseKey(v);return /(^|\s)mcl(\s|$)/.test(n)||n.includes("mclaren")}
 function isGlencarSite(v){return normaliseKey(v).includes("glencar")}

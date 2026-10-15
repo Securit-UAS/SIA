@@ -101,3 +101,7 @@ Adds Appraisal / Site Visit compliance to the master dashboard, including latest
 - Added Select all and Unselect all controls.
 - Provider selections persist locally between page loads.
 - Site and status filters continue to combine with the selected provider set.
+
+## r29
+- Provider normalisation now treats `LRS`, `LRS Limited`, `Loyal Reliance Service` and `Loyal Reliance Services` as the same provider.
+- This prevents false Declaration `Provider mismatch` flags where the Staff DB and declaration use different versions of the LRS company name.
